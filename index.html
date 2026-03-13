@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0a12">
+<title>Night Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a12;
+    --surface: #12121e;
+    --border: #1e1e30;
+    --accent: #7c6fff;
+    --accent2: #ff6fb0;
+    --text: #e8e8f0;
+    --muted: #5a5a7a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; min-height: 100vh; overflow-x: hidden; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: 0.05em; color: var(--accent); }
+  .logo span { color: var(--accent2); }
+  .tabs { display: flex; gap: 8px; }
+  .tab { background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 6px 14px; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
+  .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .view { display: none; padding: 24px; }
+  .view.active { display: block; }
+  .log-view { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 70px); gap: 40px; }
+  .tonight-count { text-align: center; }
+  .tonight-count .number { font-family: 'Syne', sans-serif; font-size: 6rem; font-weight: 800; line-height: 1; color: var(--accent); text-shadow: 0 0 40px rgba(124,111,255,0.4); }
+  .tonight-count .label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 8px; }
+  .tap-btn { width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #9d8fff, #5a4fff); border: none; cursor: pointer; box-shadow: 0 0 0 0 rgba(124,111,255,0.4), 0 20px 60px rgba(124,111,255,0.3); transition: transform 0.1s, box-shadow 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; user-select: none; }
+  .tap-btn:active { transform: scale(0.93); }
+  .tap-btn .icon { font-size: 2.5rem; }
+  .tap-btn .btn-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.9); }
+  @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(0.92); } 100% { transform: scale(1); } }
+  .pulse { animation: pulse 0.3s ease-out; }
+  .last-tap { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.05em; text-align: center; min-height: 1.2em; }
+  .section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; margin-top: 28px; }
+  .section-title:first-child { margin-top: 0; }
+  .chart-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 16px 12px; overflow-x: auto; }
+  .chart { display: flex; align-items: flex-end; gap: 6px; height: 100px; min-width: max-content; }
+  .bar-col { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 28px; }
+  .bar-val { font-size: 0.6rem; color: var(--muted); min-height: 12px; }
+  .bar { width: 22px; background: var(--accent); border-radius: 4px 4px 0 0; transition: height 0.4s ease; min-height: 2px; }
+  .bar.zero { background: var(--border); }
+  .bar-date { font-size: 0.55rem; color: var(--muted); text-align: center; line-height: 1.2; white-space: nowrap; }
+  .chart-period-label { font-size: 0.65rem; color: var(--accent2); margin-top: 10px; letter-spacing: 0.08em; }
+  .night-list { display: flex; flex-direction: column; gap: 8px; }
+  .period-header { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); padding: 12px 0 4px; border-bottom: 1px solid var(--border); margin-top: 8px; }
+  .night-row { display: flex; justify-content: space-between; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; }
+  .night-row .date { font-size: 0.75rem; color: var(--text); }
+  .night-row .times { font-size: 0.65rem; color: var(--muted); margin-top: 3px; }
+  .night-row .count { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--accent); }
+  .empty { text-align: center; color: var(--muted); font-size: 0.75rem; padding: 40px 0; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">NIGHT<span>LOG</span></div>
+  <div class="tabs">
+    <button class="tab active" onclick="showView('log', event)">LOG</button>
+    <button class="tab" onclick="showView('history', event)">HISTORY</button>
+  </div>
+</nav>
+
+<div id="view-log" class="view active log-view">
+  <div class="tonight-count">
+    <div class="number" id="tonight-num">0</div>
+    <div class="label">times tonight</div>
+  </div>
+  <button class="tap-btn" id="tap-btn" onclick="logTap()">
+    <div class="icon">🌙</div>
+    <div class="btn-label">TAP</div>
+  </button>
+  <div class="last-tap" id="last-tap">no taps yet tonight</div>
+</div>
+
+<div id="view-history" class="view">
+  <div id="history-content"></div>
+</div>
+
+<script>
+const STORAGE_KEY = 'nightlog_taps';
+function loadTaps() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; } }
+function saveTaps(taps) { localStorage.setItem(STORAGE_KEY, JSON.stringify(taps)); }
+
+function getNightKey(ts) {
+  const d = new Date(ts);
+  if (d.getHours() < 8) { const prev = new Date(d); prev.setDate(prev.getDate() - 1); return prev.toISOString().slice(0,10); }
+  return d.toISOString().slice(0,10);
+}
+function getTonightKey() { return getNightKey(Date.now()); }
+
+function logTap() {
+  const taps = loadTaps();
+  taps.push(Date.now());
+  saveTaps(taps);
+  const btn = document.getElementById('tap-btn');
+  btn.classList.remove('pulse');
+  void btn.offsetWidth;
+  btn.classList.add('pulse');
+  updateLogView(taps);
+}
+
+function updateLogView(taps) {
+  const key = getTonightKey();
+  const tonight = taps.filter(t => getNightKey(t) === key);
+  document.getElementById('tonight-num').textContent = tonight.length;
+  if (tonight.length > 0) {
+    const last = new Date(tonight[tonight.length-1]);
+    document.getElementById('last-tap').textContent = 'last: ' + last.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  } else {
+    document.getElementById('last-tap').textContent = 'no taps yet tonight';
+  }
+}
+
+function groupByNight(taps) {
+  const map = {};
+  taps.forEach(t => { const k = getNightKey(t); if (!map[k]) map[k]=[]; map[k].push(t); });
+  return map;
+}
+
+function getWeekKey(dateStr) {
+  const d = new Date(dateStr+'T12:00:00');
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day===0?-6:1);
+  return new Date(d.setDate(diff)).toISOString().slice(0,10);
+}
+
+function formatDate(dateStr) {
+  return new Date(dateStr+'T12:00:00').toLocaleDateString([],{weekday:'short',month:'short',day:'numeric'});
+}
+
+function renderHistory() {
+  const taps = loadTaps();
+  const grouped = groupByNight(taps);
+  const keys = Object.keys(grouped).sort().reverse();
+  const container = document.getElementById('history-content');
+  if (keys.length === 0) { container.innerHTML = '<div class="empty">no data yet — start tapping!</div>'; return; }
+
+  const chartDays = [];
+  for (let i=13; i>=0; i--) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const k = d.toISOString().slice(0,10);
+    chartDays.push({key:k, count:(grouped[k]||[]).length});
+  }
+  const maxCount = Math.max(...chartDays.map(d=>d.count),1);
+
+  let chartHTML = '<div class="chart">';
+  chartDays.forEach(d => {
+    const h = Math.round((d.count/maxCount)*90);
+    const label = new Date(d.key+'T12:00:00').toLocaleDateString([],{month:'numeric',day:'numeric'});
+    chartHTML += `<div class="bar-col"><div class="bar-val">${d.count>0?d.count:''}</div><div class="bar ${d.count===0?'zero':''}" style="height:${Math.max(h,2)}px"></div><div class="bar-date">${label}</div></div>`;
+  });
+  chartHTML += '</div><div class="chart-period-label">last 14 nights</div>';
+
+  let listHTML = '';
+  let currentMonth = null, currentWeek = null;
+  keys.forEach(k => {
+    const month = k.slice(0,7);
+    const week = getWeekKey(k);
+    const monthLabel = new Date(k+'T12:00:00').toLocaleDateString([],{month:'long',year:'numeric'});
+    const weekLabel = 'Week of '+new Date(week+'T12:00:00').toLocaleDateString([],{month:'short',day:'numeric'});
+    if (month !== currentMonth) { currentMonth=month; currentWeek=null; listHTML+=`<div class="period-header">${monthLabel}</div>`; }
+    if (week !== currentWeek) { currentWeek=week; listHTML+=`<div class="section-title">${weekLabel}</div>`; }
+    const times = grouped[k].map(t=>new Date(t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})).join(' · ');
+    listHTML += `<div class="night-row"><div><div class="date">${formatDate(k)}</div><div class="times">${times}</div></div><div class="count">${grouped[k].length}</div></div>`;
+  });
+
+  container.innerHTML = `<div class="section-title">last 14 nights</div><div class="chart-wrap">${chartHTML}</div><div class="section-title">night log</div><div class="night-list">${listHTML}</div>`;
+}
+
+function showView(name, e) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  e.target.classList.add('active');
+  if (name==='history') renderHistory();
+}
+
+updateLogView(loadTaps());
+</script>
+</body>
+</html>
