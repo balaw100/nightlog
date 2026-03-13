@@ -28,6 +28,8 @@
   .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
   .view { display: none; padding: 24px; }
   .view.active { display: block; }
+
+  /* LOG VIEW */
   .log-view { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 70px); gap: 40px; }
   .tonight-count { text-align: center; }
   .tonight-count .number { font-family: 'Syne', sans-serif; font-size: 6rem; font-weight: 800; line-height: 1; color: var(--accent); text-shadow: 0 0 40px rgba(124,111,255,0.4); }
@@ -39,26 +41,175 @@
   @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(0.92); } 100% { transform: scale(1); } }
   .pulse { animation: pulse 0.3s ease-out; }
   .last-tap { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.05em; text-align: center; min-height: 1.2em; }
+
+  /* WATER BADGE on log screen */
+  .water-badge {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.7;
+  }
+  .water-badge strong { color: var(--accent2); }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 24px;
+  }
+  .modal-overlay.hidden { display: none; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-radius: 16px;
+    padding: 28px 24px;
+    width: 100%;
+    max-width: 360px;
+  }
+  .modal-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .modal-sub {
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .modal-q {
+    font-size: 0.72rem;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+  }
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+  .choice-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .choice-btn.selected {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .modal-save {
+    width: 100%;
+    background: var(--accent);
+    border: none;
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+  }
+  .modal-save.ready { opacity: 1; }
+
+  /* HISTORY */
   .section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; margin-top: 28px; }
   .section-title:first-child { margin-top: 0; }
   .chart-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 16px 12px; overflow-x: auto; }
   .chart { display: flex; align-items: flex-end; gap: 6px; height: 100px; min-width: max-content; }
-  .bar-col { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 28px; }
+  .bar-col { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 32px; cursor: pointer; }
   .bar-val { font-size: 0.6rem; color: var(--muted); min-height: 12px; }
   .bar { width: 22px; background: var(--accent); border-radius: 4px 4px 0 0; transition: height 0.4s ease; min-height: 2px; }
   .bar.zero { background: var(--border); }
   .bar-date { font-size: 0.55rem; color: var(--muted); text-align: center; line-height: 1.2; white-space: nowrap; }
+  .bar-water { font-size: 0.55rem; color: var(--accent2); text-align: center; margin-top: 2px; }
   .chart-period-label { font-size: 0.65rem; color: var(--accent2); margin-top: 10px; letter-spacing: 0.08em; }
+
+  /* CORRELATION STRIP */
+  .corr-strip {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .corr-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.65rem;
+  }
+  .corr-date { color: var(--muted); min-width: 60px; }
+  .corr-pee { color: var(--accent); font-weight: 700; font-family: 'Syne', sans-serif; font-size: 0.85rem; min-width: 20px; }
+  .corr-water { color: var(--accent2); }
+  .corr-timing { color: var(--muted); }
+  .corr-no-data { color: var(--border); font-style: italic; }
+
+  /* NIGHT LIST */
   .night-list { display: flex; flex-direction: column; gap: 8px; }
   .period-header { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); padding: 12px 0 4px; border-bottom: 1px solid var(--border); margin-top: 8px; }
-  .night-row { display: flex; justify-content: space-between; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; }
+  .night-row { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; }
+  .night-row-top { display: flex; justify-content: space-between; align-items: flex-start; }
   .night-row .date { font-size: 0.75rem; color: var(--text); }
-  .night-row .times { font-size: 0.65rem; color: var(--muted); margin-top: 3px; }
+  .night-row .times { font-size: 0.62rem; color: var(--muted); margin-top: 3px; line-height: 1.6; }
   .night-row .count { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--accent); }
+  .night-row .water-info { font-size: 0.62rem; color: var(--accent2); margin-top: 6px; }
   .empty { text-align: center; color: var(--muted); font-size: 0.75rem; padding: 40px 0; }
+
+  .legend { display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.6rem; color: var(--muted); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 </style>
 </head>
 <body>
+
+<!-- INTAKE MODAL -->
+<div class="modal-overlay hidden" id="modal">
+  <div class="modal">
+    <div class="modal-title">Good Evening 🌙</div>
+    <div class="modal-sub">Quick check-in before tonight's tracking begins.</div>
+
+    <div class="modal-q">Glasses of water today?</div>
+    <div class="btn-group" id="glasses-group">
+      <button class="choice-btn" onclick="selectChoice('glasses','none',this)">None</button>
+      <button class="choice-btn" onclick="selectChoice('glasses','4-6',this)">4–6</button>
+      <button class="choice-btn" onclick="selectChoice('glasses','7-9',this)">7–9</button>
+      <button class="choice-btn" onclick="selectChoice('glasses','10+',this)">10+</button>
+    </div>
+
+    <div class="modal-q">When did you drink most of it?</div>
+    <div class="btn-group" id="timing-group">
+      <button class="choice-btn" onclick="selectChoice('timing','morning',this)">Morning</button>
+      <button class="choice-btn" onclick="selectChoice('timing','afternoon',this)">Afternoon</button>
+      <button class="choice-btn" onclick="selectChoice('timing','evening',this)">Evening</button>
+      <button class="choice-btn" onclick="selectChoice('timing','neutral',this)">Spread out</button>
+    </div>
+
+    <button class="modal-save" id="modal-save" onclick="saveIntake()">START TONIGHT</button>
+  </div>
+</div>
+
 <nav>
   <div class="logo">NIGHT<span>LOG</span></div>
   <div class="tabs">
@@ -77,6 +228,7 @@
     <div class="btn-label">TAP</div>
   </button>
   <div class="last-tap" id="last-tap">no taps yet tonight</div>
+  <div class="water-badge" id="water-badge" style="display:none"></div>
 </div>
 
 <div id="view-history" class="view">
@@ -84,16 +236,71 @@
 </div>
 
 <script>
-const STORAGE_KEY = 'nightlog_taps';
-function loadTaps() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; } }
-function saveTaps(taps) { localStorage.setItem(STORAGE_KEY, JSON.stringify(taps)); }
+const TAPS_KEY = 'nightlog_taps';
+const INTAKE_KEY = 'nightlog_intake';
+
+let modalChoices = { glasses: null, timing: null };
+
+function loadTaps() { try { return JSON.parse(localStorage.getItem(TAPS_KEY)) || []; } catch { return []; } }
+function saveTaps(taps) { localStorage.setItem(TAPS_KEY, JSON.stringify(taps)); }
+function loadIntake() { try { return JSON.parse(localStorage.getItem(INTAKE_KEY)) || {}; } catch { return {}; } }
+function saveIntake_data(data) { localStorage.setItem(INTAKE_KEY, JSON.stringify(data)); }
 
 function getNightKey(ts) {
   const d = new Date(ts);
-  if (d.getHours() < 8) { const prev = new Date(d); prev.setDate(prev.getDate() - 1); return prev.toISOString().slice(0,10); }
+  if (d.getHours() < 20) { // before 8pm belongs to previous night
+    const prev = new Date(d);
+    prev.setDate(prev.getDate() - 1);
+    return prev.toISOString().slice(0,10);
+  }
   return d.toISOString().slice(0,10);
 }
 function getTonightKey() { return getNightKey(Date.now()); }
+
+// Modal logic
+function selectChoice(type, value, el) {
+  const groupId = type === 'glasses' ? 'glasses-group' : 'timing-group';
+  document.querySelectorAll('#' + groupId + ' .choice-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  modalChoices[type] = value;
+  if (modalChoices.glasses && modalChoices.timing) {
+    document.getElementById('modal-save').classList.add('ready');
+  }
+}
+
+function saveIntake() {
+  if (!modalChoices.glasses || !modalChoices.timing) return;
+  const intake = loadIntake();
+  intake[getTonightKey()] = { glasses: modalChoices.glasses, timing: modalChoices.timing };
+  saveIntake_data(intake);
+  document.getElementById('modal').classList.add('hidden');
+  updateWaterBadge();
+}
+
+function checkShowModal() {
+  const key = getTonightKey();
+  const intake = loadIntake();
+  // Only show if we're in night hours (8pm-8am) and haven't answered yet
+  const hour = new Date().getHours();
+  const isNightTime = hour >= 20 || hour < 8;
+  if (isNightTime && !intake[key]) {
+    document.getElementById('modal').classList.remove('hidden');
+  }
+}
+
+function updateWaterBadge() {
+  const key = getTonightKey();
+  const intake = loadIntake();
+  const badge = document.getElementById('water-badge');
+  if (intake[key]) {
+    const { glasses, timing } = intake[key];
+    const timingLabel = { morning: 'mostly morning', afternoon: 'mostly afternoon', evening: 'mostly evening', neutral: 'spread out' }[timing];
+    badge.innerHTML = `<strong>Today's water:</strong> ${glasses} glasses &nbsp;·&nbsp; ${timingLabel}`;
+    badge.style.display = 'block';
+  } else {
+    badge.style.display = 'none';
+  }
+}
 
 function logTap() {
   const taps = loadTaps();
@@ -135,29 +342,61 @@ function formatDate(dateStr) {
   return new Date(dateStr+'T12:00:00').toLocaleDateString([],{weekday:'short',month:'short',day:'numeric'});
 }
 
+const glassesColor = { 'none': '#5a5a7a', '4-6': '#7c6fff', '7-9': '#a78bff', '10+': '#ff6fb0' };
+const timingSymbol = { 'morning': '☀️AM', 'afternoon': '🌤PM', 'evening': '🌆EVE', 'neutral': '〰️MIX' };
+
 function renderHistory() {
   const taps = loadTaps();
+  const intake = loadIntake();
   const grouped = groupByNight(taps);
-  const keys = Object.keys(grouped).sort().reverse();
+
+  // Merge all night keys from both taps and intake
+  const allKeys = new Set([...Object.keys(grouped), ...Object.keys(intake)]);
+  const keys = Array.from(allKeys).sort().reverse();
+
   const container = document.getElementById('history-content');
   if (keys.length === 0) { container.innerHTML = '<div class="empty">no data yet — start tapping!</div>'; return; }
 
+  // 14-day bar chart
   const chartDays = [];
   for (let i=13; i>=0; i--) {
     const d = new Date(); d.setDate(d.getDate()-i);
     const k = d.toISOString().slice(0,10);
-    chartDays.push({key:k, count:(grouped[k]||[]).length});
+    chartDays.push({ key:k, count:(grouped[k]||[]).length, intake: intake[k]||null });
   }
-  const maxCount = Math.max(...chartDays.map(d=>d.count),1);
+  const maxCount = Math.max(...chartDays.map(d=>d.count), 1);
 
   let chartHTML = '<div class="chart">';
   chartDays.forEach(d => {
     const h = Math.round((d.count/maxCount)*90);
     const label = new Date(d.key+'T12:00:00').toLocaleDateString([],{month:'numeric',day:'numeric'});
-    chartHTML += `<div class="bar-col"><div class="bar-val">${d.count>0?d.count:''}</div><div class="bar ${d.count===0?'zero':''}" style="height:${Math.max(h,2)}px"></div><div class="bar-date">${label}</div></div>`;
+    const waterDot = d.intake ? `<div class="bar-water" title="${d.intake.glasses} glasses, ${d.intake.timing}">${d.intake.glasses}</div>` : '<div class="bar-water"> </div>';
+    chartHTML += `<div class="bar-col"><div class="bar-val">${d.count>0?d.count:''}</div><div class="bar ${d.count===0?'zero':''}" style="height:${Math.max(h,2)}px"></div><div class="bar-date">${label}</div>${waterDot}</div>`;
   });
-  chartHTML += '</div><div class="chart-period-label">last 14 nights</div>';
+  chartHTML += '</div>';
+  chartHTML += '<div class="legend"><div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>pee count</div><div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div>water glasses</div></div>';
+  chartHTML += '<div class="chart-period-label">last 14 nights</div>';
 
+  // Correlation strip
+  let corrHTML = '';
+  const recentKeys = keys.slice(0, 14);
+  recentKeys.forEach(k => {
+    const pee = (grouped[k]||[]).length;
+    const inf = intake[k];
+    const dateLabel = formatDate(k);
+    const waterStr = inf ? `${inf.glasses} glasses` : '—';
+    const timingStr = inf ? timingSymbol[inf.timing] : '';
+    const noData = !inf ? 'corr-no-data' : '';
+    corrHTML += `
+      <div class="corr-row">
+        <div class="corr-date">${dateLabel}</div>
+        <div class="corr-pee">${pee}x</div>
+        <div class="corr-water ${noData}">${waterStr}</div>
+        <div class="corr-timing">${timingStr}</div>
+      </div>`;
+  });
+
+  // Night list grouped by month/week
   let listHTML = '';
   let currentMonth = null, currentWeek = null;
   keys.forEach(k => {
@@ -167,11 +406,35 @@ function renderHistory() {
     const weekLabel = 'Week of '+new Date(week+'T12:00:00').toLocaleDateString([],{month:'short',day:'numeric'});
     if (month !== currentMonth) { currentMonth=month; currentWeek=null; listHTML+=`<div class="period-header">${monthLabel}</div>`; }
     if (week !== currentWeek) { currentWeek=week; listHTML+=`<div class="section-title">${weekLabel}</div>`; }
-    const times = grouped[k].map(t=>new Date(t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})).join(' · ');
-    listHTML += `<div class="night-row"><div><div class="date">${formatDate(k)}</div><div class="times">${times}</div></div><div class="count">${grouped[k].length}</div></div>`;
+
+    const nightTaps = grouped[k] || [];
+    const times = nightTaps.map(t=>new Date(t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})).join(' · ');
+    const inf = intake[k];
+    const waterLine = inf
+      ? `<div class="water-info">💧 ${inf.glasses} glasses &nbsp;·&nbsp; ${timingSymbol[inf.timing]}</div>`
+      : `<div class="water-info" style="color:var(--border)">💧 no intake data</div>`;
+
+    listHTML += `
+      <div class="night-row">
+        <div class="night-row-top">
+          <div>
+            <div class="date">${formatDate(k)}</div>
+            <div class="times">${times || 'no taps'}</div>
+          </div>
+          <div class="count">${nightTaps.length}</div>
+        </div>
+        ${waterLine}
+      </div>`;
   });
 
-  container.innerHTML = `<div class="section-title">last 14 nights</div><div class="chart-wrap">${chartHTML}</div><div class="section-title">night log</div><div class="night-list">${listHTML}</div>`;
+  container.innerHTML = `
+    <div class="section-title">last 14 nights</div>
+    <div class="chart-wrap">${chartHTML}</div>
+    <div class="section-title">intake vs output</div>
+    <div class="corr-strip">${corrHTML}</div>
+    <div class="section-title">night log</div>
+    <div class="night-list">${listHTML}</div>
+  `;
 }
 
 function showView(name, e) {
@@ -182,7 +445,10 @@ function showView(name, e) {
   if (name==='history') renderHistory();
 }
 
+// Init
 updateLogView(loadTaps());
+updateWaterBadge();
+checkShowModal();
 </script>
 </body>
 </html>
