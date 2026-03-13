@@ -99,7 +99,7 @@
 
   .export-btn { background: none; border: 1px solid var(--accent); color: var(--accent); font-family: 'DM Mono', monospace; font-size: 0.75rem; padding: 12px 20px; border-radius: 20px; cursor: pointer; width: 100%; margin-top: 16px; }
   .export-btn:active { background: var(--accent); color: #fff; }
-  .reset-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.62rem; padding: 6px 16px; border-radius: 20px; cursor: pointer; }
+  .reset-btn { background: var(--accent); border: none; color: #fff; font-family: 'DM Mono', monospace; font-size: 0.78rem; padding: 12px 32px; border-radius: 20px; cursor: pointer; margin-top: 4px; }
   .reset-btn:active { border-color: var(--accent2); color: var(--accent2); }
 </style>
 </head>
@@ -161,7 +161,7 @@
   <button class="undo-btn" id="undo-btn" onclick="undoTap()" style="display:none">↩ undo last tap</button>
 
   <div class="water-badge" id="water-badge" style="display:none"></div>
-  <button class="reset-btn" id="reset-btn" onclick="resetTonight()" style="display:none">↺ reset tonight's intake</button>
+  <button class="reset-btn" id="reset-btn" onclick="resetTonight()" style="display:none">↺ Reset Check-in</button>
 
   <div class="notes-wrap">
     <div class="notes-label">tonight's notes (optional)</div>
