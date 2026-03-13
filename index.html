@@ -99,6 +99,8 @@
 
   .export-btn { background: none; border: 1px solid var(--accent); color: var(--accent); font-family: 'DM Mono', monospace; font-size: 0.75rem; padding: 12px 20px; border-radius: 20px; cursor: pointer; width: 100%; margin-top: 16px; }
   .export-btn:active { background: var(--accent); color: #fff; }
+  .reset-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.62rem; padding: 6px 16px; border-radius: 20px; cursor: pointer; }
+  .reset-btn:active { border-color: var(--accent2); color: var(--accent2); }
 </style>
 </head>
 <body>
@@ -159,6 +161,7 @@
   <button class="undo-btn" id="undo-btn" onclick="undoTap()" style="display:none">↩ undo last tap</button>
 
   <div class="water-badge" id="water-badge" style="display:none"></div>
+  <button class="reset-btn" id="reset-btn" onclick="resetTonight()" style="display:none">↺ reset tonight's intake</button>
 
   <div class="notes-wrap">
     <div class="notes-label">tonight's notes (optional)</div>
@@ -212,6 +215,17 @@ function saveIntake() {
   updateWaterBadge();
 }
 
+function resetTonight() {
+  const intake = loadIntake();
+  delete intake[getTonightKey()];
+  saveIntakeData(intake);
+  modalChoices = { glasses: null, timing: null };
+  document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('modal-save').classList.remove('ready');
+  updateWaterBadge();
+  document.getElementById('modal').classList.remove('hidden');
+}
+
 function checkShowModal() {
   const hour = new Date().getHours();
   if ((hour >= 20 || hour < 8) && !loadIntake()[getTonightKey()])
@@ -225,8 +239,10 @@ function updateWaterBadge() {
     const tLabel = {morning:'mostly morning',afternoon:'mostly afternoon',evening:'mostly evening',neutral:'spread out'}[inf.timing];
     badge.innerHTML = `<strong>Today's water:</strong> ${inf.glasses} glasses &nbsp;·&nbsp; ${tLabel}`;
     badge.style.display = 'block';
+    document.getElementById('reset-btn').style.display = 'inline-block';
   } else {
     badge.style.display = 'none';
+    document.getElementById('reset-btn').style.display = 'none';
   }
 }
 
