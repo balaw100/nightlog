@@ -62,6 +62,7 @@
   .choice-btn.selected { background: var(--accent); border-color: var(--accent); }
   .modal-save { width: 100%; background: var(--accent); border: none; color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; padding: 16px; border-radius: 10px; cursor: pointer; opacity: 0.4; transition: opacity 0.2s; }
   .modal-save.ready { opacity: 1; }
+  .modal-skip { background: none; border: none; color: #e8e8f0; font-family: 'DM Mono', monospace; font-size: 0.75rem; width: 100%; margin-top: 12px; cursor: pointer; text-align: center; opacity: 0.6; }
 
   .section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: #e8e8f0; margin-bottom: 16px; margin-top: 28px; }
   .section-title:first-child { margin-top: 0; }
@@ -130,6 +131,7 @@
       <button class="choice-btn" onclick="selectChoice('timing','neutral',this)">Spread out</button>
     </div>
     <button class="modal-save" id="modal-save" onclick="saveIntake()">START TONIGHT</button>
+    <button class="modal-skip" onclick="skipModal()">Skip for now →</button>
   </div>
 </div>
 
@@ -252,6 +254,10 @@ function startDay() {
   document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById('modal-save').classList.remove('ready');
   document.getElementById('modal').classList.remove('hidden');
+}
+
+function skipModal() {
+  document.getElementById('modal').classList.add('hidden');
 }
 
 function checkShowModal() {
