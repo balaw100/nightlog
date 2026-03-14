@@ -72,6 +72,10 @@
   .bar { width: 22px; background: var(--accent); border-radius: 4px 4px 0 0; min-height: 2px; }
   .bar.zero { background: var(--border); }
   .bar-date { font-size: 0.55rem; color: #e8e8f0; text-align: center; line-height: 1.2; white-space: nowrap; }
+  .bar-pair { display: flex; align-items: flex-end; gap: 3px; }
+  .bar-wrap { display: flex; flex-direction: column; align-items: center; }
+  .water-bar { background: var(--accent2) !important; }
+  .water-val { color: var(--accent2); }
   .bar-water { font-size: 0.55rem; color: var(--accent2); text-align: center; margin-top: 2px; }
   .chart-period-label { font-size: 0.65rem; color: var(--accent2); margin-top: 10px; }
   .legend { display: flex; gap: 16px; margin-top: 12px; }
@@ -366,17 +370,21 @@ function renderHistory() {
   if (!keys.length) { container.innerHTML='<div class="empty">no data yet — start tapping!</div>'; return; }
 
   // Chart
+  const glassesToNum = {'0-3':2,'4-6':5,'7-9':8,'10+':10};
   const chartDays=[];
   for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const k=d.toISOString().slice(0,10);chartDays.push({key:k,count:(grouped[k]||[]).length,intake:intake[k]||null});}
-  const maxC=Math.max(...chartDays.map(d=>d.count),1);
+  const maxPee=Math.max(...chartDays.map(d=>d.count),1);
+  const maxWater=Math.max(...chartDays.map(d=>d.intake?glassesToNum[d.intake.glasses]||0:0),1);
+  const maxC=Math.max(maxPee,maxWater);
   let cHTML='<div class="chart">';
   chartDays.forEach(d=>{
-    const h=Math.round((d.count/maxC)*90);
+    const pH=Math.round((d.count/maxC)*90);
+    const wVal=d.intake?glassesToNum[d.intake.glasses]||0:0;
+    const wH=Math.round((wVal/maxC)*90);
     const label=new Date(d.key+'T12:00:00').toLocaleDateString([],{month:'numeric',day:'numeric'});
-    const wDot=d.intake?`<div class="bar-water">${d.intake.glasses}</div>`:'<div class="bar-water"> </div>';
-    cHTML+=`<div class="bar-col"><div class="bar-val">${d.count>0?d.count:''}</div><div class="bar ${d.count===0?'zero':''}" style="height:${Math.max(h,2)}px"></div><div class="bar-date">${label}</div>${wDot}</div>`;
+    cHTML+=`<div class="bar-col"><div class="bar-pair"><div class="bar-wrap"><div class="bar-val">${d.count>0?d.count:''}</div><div class="bar ${d.count===0?'zero':''}" style="height:${Math.max(pH,2)}px"></div></div><div class="bar-wrap"><div class="bar-val water-val">${wVal>0?wVal:''}</div><div class="bar water-bar ${wVal===0?'zero':''}" style="height:${Math.max(wH,2)}px"></div></div></div><div class="bar-date">${label}</div></div>`;
   });
-  cHTML+='</div><div class="legend"><div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>pee count</div><div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div>water glasses</div></div><div class="chart-period-label">last 14 nights</div>';
+  cHTML+='</div><div class="legend"><div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>pee</div><div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div>water</div></div><div class="chart-period-label">last 14 nights</div>';
 
   // Corr strip
   let corrHTML='';
