@@ -232,7 +232,6 @@ function resetTonight() {
 }
 
 function startDay() {
-  // Reset the view to zero without touching stored data
   document.getElementById('tonight-num').textContent = '0';
   document.getElementById('last-tap').textContent = 'no taps yet tonight';
   document.getElementById('undo-btn').style.display = 'none';
@@ -241,6 +240,14 @@ function startDay() {
   document.getElementById('notes-input').value = '';
   document.getElementById('avg7').textContent = '—';
   document.getElementById('avg30').textContent = '—';
+  // Clear tonight's intake and show popup fresh
+  const intake = loadIntake();
+  delete intake[getTonightKey()];
+  saveIntakeData(intake);
+  modalChoices = { glasses: null, timing: null };
+  document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('modal-save').classList.remove('ready');
+  document.getElementById('modal').classList.remove('hidden');
 }
 
 function checkShowModal() {
