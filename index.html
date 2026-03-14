@@ -19,7 +19,7 @@
   .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: 0.05em; color: var(--accent); }
   .logo span { color: var(--accent2); }
   .tabs { display: flex; gap: 8px; }
-  .tab { background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 6px 14px; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
+  .tab { background: none; border: 1px solid var(--border); color: #e8e8f0; font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 6px 14px; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
   .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
   .view { display: none; padding: 24px; }
   .view.active { display: block; }
@@ -31,31 +31,31 @@
   .tap-btn .btn-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.9); }
   @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(0.92)} 100%{transform:scale(1)} }
   .pulse { animation: pulse 0.3s ease-out; }
-  .last-tap { font-size: 0.7rem; color: var(--muted); text-align: center; min-height: 1.2em; }
+  .last-tap { font-size: 0.7rem; color: #e8e8f0; text-align: center; min-height: 1.2em; }
 
   .streak-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 8px; display: flex; width: 100%; max-width: 320px; }
   .streak-stat { flex: 1; text-align: center; padding: 0 6px; border-right: 1px solid var(--border); }
   .streak-stat:last-child { border-right: none; }
   .streak-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--accent); line-height: 1; }
-  .streak-label { font-size: 0.55rem; color: var(--muted); margin-top: 4px; line-height: 1.4; text-transform: uppercase; }
+  .streak-label { font-size: 0.55rem; color: #e8e8f0; margin-top: 4px; line-height: 1.4; text-transform: uppercase; }
 
-  .undo-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 8px 20px; border-radius: 20px; cursor: pointer; }
+  .undo-btn { background: none; border: 1px solid var(--border); color: #e8e8f0; font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 8px 20px; border-radius: 20px; cursor: pointer; }
   .undo-btn:active { border-color: var(--accent2); color: var(--accent2); }
 
-  .water-badge { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 18px; font-size: 0.68rem; color: var(--muted); text-align: center; line-height: 1.7; width: 100%; max-width: 320px; }
+  .water-badge { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 18px; font-size: 0.68rem; color: #e8e8f0; text-align: center; line-height: 1.7; width: 100%; max-width: 320px; }
   .water-badge strong { color: var(--accent2); }
 
   .notes-wrap { width: 100%; max-width: 320px; }
-  .notes-label { font-size: 0.62rem; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .notes-label { font-size: 0.62rem; color: #e8e8f0; margin-bottom: 6px; letter-spacing: 0.08em; text-transform: uppercase; }
   .notes-input { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.75rem; padding: 10px 14px; resize: none; outline: none; transition: border-color 0.2s; line-height: 1.5; }
   .notes-input:focus { border-color: var(--accent); }
-  .notes-input::placeholder { color: var(--muted); }
+  .notes-input::placeholder { color: #e8e8f0; }
 
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 24px; }
   .modal-overlay.hidden { display: none; }
   .modal { background: var(--surface); border: 1px solid var(--accent); border-radius: 16px; padding: 28px 24px; width: 100%; max-width: 360px; }
   .modal-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--accent); margin-bottom: 6px; }
-  .modal-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+  .modal-sub { font-size: 0.85rem; color: #e8e8f0; margin-bottom: 24px; line-height: 1.5; }
   .modal-q { font-size: 0.9rem; color: var(--text); margin-bottom: 10px; }
   .btn-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
   .choice-btn { background: var(--bg); border: 1px solid var(--border); color: #fff; font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 10px 18px; border-radius: 20px; cursor: pointer; transition: all 0.15s; }
@@ -63,27 +63,27 @@
   .modal-save { width: 100%; background: var(--accent); border: none; color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; padding: 16px; border-radius: 10px; cursor: pointer; opacity: 0.4; transition: opacity 0.2s; }
   .modal-save.ready { opacity: 1; }
 
-  .section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; margin-top: 28px; }
+  .section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: #e8e8f0; margin-bottom: 16px; margin-top: 28px; }
   .section-title:first-child { margin-top: 0; }
   .chart-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 16px 12px; overflow-x: auto; }
   .chart { display: flex; align-items: flex-end; gap: 6px; height: 100px; min-width: max-content; }
   .bar-col { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 32px; }
-  .bar-val { font-size: 0.6rem; color: var(--muted); min-height: 12px; }
+  .bar-val { font-size: 0.6rem; color: #e8e8f0; min-height: 12px; }
   .bar { width: 22px; background: var(--accent); border-radius: 4px 4px 0 0; min-height: 2px; }
   .bar.zero { background: var(--border); }
-  .bar-date { font-size: 0.55rem; color: var(--muted); text-align: center; line-height: 1.2; white-space: nowrap; }
+  .bar-date { font-size: 0.55rem; color: #e8e8f0; text-align: center; line-height: 1.2; white-space: nowrap; }
   .bar-water { font-size: 0.55rem; color: var(--accent2); text-align: center; margin-top: 2px; }
   .chart-period-label { font-size: 0.65rem; color: var(--accent2); margin-top: 10px; }
   .legend { display: flex; gap: 16px; margin-top: 12px; }
-  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.6rem; color: var(--muted); }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.6rem; color: #e8e8f0; }
   .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
   .corr-strip { display: flex; flex-direction: column; gap: 6px; }
   .corr-row { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 0.65rem; }
-  .corr-date { color: var(--muted); min-width: 60px; }
+  .corr-date { color: #e8e8f0; min-width: 60px; }
   .corr-pee { color: var(--accent); font-weight: 700; font-family: 'Syne', sans-serif; font-size: 0.85rem; min-width: 24px; }
   .corr-water { color: var(--accent2); }
-  .corr-timing { color: var(--muted); margin-left: auto; }
+  .corr-timing { color: #e8e8f0; margin-left: auto; }
   .corr-no-data { color: var(--border); font-style: italic; }
 
   .night-list { display: flex; flex-direction: column; gap: 8px; }
@@ -91,15 +91,17 @@
   .night-row { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; }
   .night-row-top { display: flex; justify-content: space-between; align-items: flex-start; }
   .night-row .date { font-size: 0.75rem; color: var(--text); }
-  .night-row .times { font-size: 0.62rem; color: var(--muted); margin-top: 3px; line-height: 1.6; }
+  .night-row .times { font-size: 0.62rem; color: #e8e8f0; margin-top: 3px; line-height: 1.6; }
   .night-row .count { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--accent); }
   .night-row .water-info { font-size: 0.62rem; color: var(--accent2); margin-top: 6px; }
-  .night-row .note-text { font-size: 0.62rem; color: var(--muted); margin-top: 4px; font-style: italic; }
-  .empty { text-align: center; color: var(--muted); font-size: 0.75rem; padding: 40px 0; }
+  .night-row .note-text { font-size: 0.62rem; color: #e8e8f0; margin-top: 4px; font-style: italic; }
+  .empty { text-align: center; color: #e8e8f0; font-size: 0.75rem; padding: 40px 0; }
 
   .export-btn { background: none; border: 1px solid var(--accent); color: var(--accent); font-family: 'DM Mono', monospace; font-size: 0.75rem; padding: 12px 20px; border-radius: 20px; cursor: pointer; width: 100%; margin-top: 16px; }
   .export-btn:active { background: var(--accent); color: #fff; }
-  .reset-btn { background: var(--accent); border: none; color: #fff; font-family: 'DM Mono', monospace; font-size: 0.78rem; padding: 12px 32px; border-radius: 20px; cursor: pointer; margin-top: 4px; }
+  .day-btns { display: flex; gap: 10px; }
+  .small-btn { background: var(--accent); border: none; color: #fff; font-family: 'DM Mono', monospace; font-size: 0.68rem; padding: 9px 18px; border-radius: 20px; cursor: pointer; }
+  .small-btn:active { opacity: 0.8; }
   .reset-btn:active { border-color: var(--accent2); color: var(--accent2); }
 </style>
 </head>
@@ -161,7 +163,10 @@
   <button class="undo-btn" id="undo-btn" onclick="undoTap()" style="display:none">↩ undo last tap</button>
 
   <div class="water-badge" id="water-badge" style="display:none"></div>
-  <button class="reset-btn" id="reset-btn" onclick="resetTonight()" style="display:none">↺ Reset Check-in</button>
+  <div class="day-btns" id="day-btns" style="display:none">
+    <button class="small-btn" onclick="resetTonight()">↺ Reset Check-in</button>
+    <button class="small-btn" onclick="startDay()">☀️ Start Day</button>
+  </div>
 
   <div class="notes-wrap">
     <div class="notes-label">tonight's notes (optional)</div>
@@ -226,6 +231,18 @@ function resetTonight() {
   document.getElementById('modal').classList.remove('hidden');
 }
 
+function startDay() {
+  // Reset the view to zero without touching stored data
+  document.getElementById('tonight-num').textContent = '0';
+  document.getElementById('last-tap').textContent = 'no taps yet tonight';
+  document.getElementById('undo-btn').style.display = 'none';
+  document.getElementById('water-badge').style.display = 'none';
+  document.getElementById('day-btns').style.display = 'none';
+  document.getElementById('notes-input').value = '';
+  document.getElementById('avg7').textContent = '—';
+  document.getElementById('avg30').textContent = '—';
+}
+
 function checkShowModal() {
   const hour = new Date().getHours();
   if ((hour >= 20 || hour < 8) && !loadIntake()[getTonightKey()])
@@ -239,10 +256,10 @@ function updateWaterBadge() {
     const tLabel = {morning:'mostly morning',afternoon:'mostly afternoon',evening:'mostly evening',neutral:'spread out'}[inf.timing];
     badge.innerHTML = `<strong>Today's water:</strong> ${inf.glasses} glasses &nbsp;·&nbsp; ${tLabel}`;
     badge.style.display = 'block';
-    document.getElementById('reset-btn').style.display = 'inline-block';
+    document.getElementById('day-btns').style.display = 'flex';
   } else {
     badge.style.display = 'none';
-    document.getElementById('reset-btn').style.display = 'none';
+    document.getElementById('day-btns').style.display = 'none';
   }
 }
 
